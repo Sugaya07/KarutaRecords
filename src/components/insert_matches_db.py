@@ -1,4 +1,5 @@
 import gspread
+import json
 import streamlit as st
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -8,12 +9,24 @@ scope = [
     'https://www.googleapis.com/auth/drive'
 ]
 
-# サービスアカウント用の認証情報ファイル（JSON形式）のパス
-credentials_content = st.secrets["CREDENTIALS_JSON"]
+credentials_dict = {
+    "type": st.secrets["type"],
+    "project_id": st.secrets["project_id"],
+    "private_key_id": st.secrets["private_key_id"],
+    "private_key": st.secrets["private_key"],
+    "client_email": st.secrets["client_email"],
+    "client_id": st.secrets["client_id"],
+    "auth_uri": st.secrets["auth_uri"],
+    "token_uri": st.secrets["token_uri"],
+    "auth_provider_x509_cert_url": st.secrets["auth_provider_x509_cert_url"],
+    "client_x509_cert_url": st.secrets["client_x509_cert_url"]
+}
+credentials_json = json.dumps(credentials_dict)
 
 def connect_sps(player1_id, player2_id, result, difference, round_num):
     # サービスアカウントの認証情報を取得
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(credentials_content, scope)
+    credentials = ServiceAccountCredentials.from_json_keyfile_dict(json.loads(credentials_json), scope)
+    # credentials = ServiceAccountCredentials.from_json_keyfile_name(credentials_content, scope)
 
     # Google Sheetsに接続
     gc = gspread.authorize(credentials)
