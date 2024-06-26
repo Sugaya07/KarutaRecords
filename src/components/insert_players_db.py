@@ -1,5 +1,6 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from components.utils.connect_sps import fetch_data_from_sheet
 
 # 認証スコープ
 scope = [
@@ -24,10 +25,8 @@ def connect_sps(user_name):
         # 共有されたスプレッドシートを開く
         worksheet = gc.open_by_key(spreadsheet_key).worksheet("players")
 
-        # データの読み取り
-        data = worksheet.get_all_values()
-        print("スプレッドシートのデータ:")
-        print(data)
+        # シートの実際の行数を取得
+        data = worksheet.col_values(1)
 
         # 直前のAセルの値を取得
         last_row = len(data)
@@ -41,7 +40,6 @@ def connect_sps(user_name):
         # 新しいデータの書き込み
         new_data = [[new_id, user_name]]
         worksheet.append_rows(new_data)
-        print("新しいデータが追加されました。")
 
     except Exception as e:
         print("エラーが発生しました:", e)

@@ -25,9 +25,7 @@ def connect_sps(player1_id, player2_id, result, difference, round_num):
         worksheet = gc.open_by_key(spreadsheet_key).worksheet("matches")
 
         # データの読み取り
-        data = worksheet.get_all_values()
-        print("スプレッドシートのデータ:")
-        print(data)
+        data = worksheet.col_values(1)
 
         # 直前のAセルの値を取得
         last_row = len(data)
@@ -41,15 +39,12 @@ def connect_sps(player1_id, player2_id, result, difference, round_num):
         # 新しいデータの書き込み
         new_data = [[new_id, player1_id, player2_id, result, difference]]
         worksheet.append_rows(new_data)
-        print("新しいデータが追加されました。")
 
         # 共有されたスプレッドシートを開く
         worksheet = gc.open_by_key(spreadsheet_key).worksheet("rounds")
 
         # データの読み取り
-        data = worksheet.get_all_values()
-        print("スプレッドシートのデータ:")
-        print(data)
+        data = worksheet.col_values(1)
         # 直前のAセルの値を取得
         last_row = len(data)
         if last_row > 0 and data[last_row-1][0].isdigit():
@@ -61,7 +56,6 @@ def connect_sps(player1_id, player2_id, result, difference, round_num):
         # 新しいデータの書き込み
         new_data = [[round_id, new_id,round_num]]
         worksheet.append_rows(new_data)
-        print("新しいデータが追加されました。")
 
     except Exception as e:
         print("エラーが発生しました:", e)
