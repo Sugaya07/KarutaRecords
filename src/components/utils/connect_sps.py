@@ -1,5 +1,6 @@
 import gspread
 import pandas as pd
+import streamlit as st
 from oauth2client.service_account import ServiceAccountCredentials
 
 # 認証スコープ
@@ -9,11 +10,11 @@ scope = [
 ]
 
 # サービスアカウント用の認証情報ファイル（JSON形式）のパス
-credentials_file = r"./karutarecords-36984d9fbf52.json"
+credentials_content = st.secrets["CREDENTIALS_JSON"]
 
 def fetch_data_from_sheet(table_name: str):
     # サービスアカウントの認証情報を取得
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(credentials_file, scope)
+    credentials = ServiceAccountCredentials.from_json_keyfile_name(credentials_content, scope)
 
     # Google Sheetsに接続
     gc = gspread.authorize(credentials)
