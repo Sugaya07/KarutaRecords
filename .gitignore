@@ -162,3 +162,5 @@ cython_debug/
 #.idea/
 myenv/
 karuta_record.db
+karutarecords-36984d9fbf52.json
+.DS_Store
