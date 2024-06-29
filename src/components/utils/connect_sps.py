@@ -23,7 +23,6 @@ credentials_dict = {
     "client_x509_cert_url": st.secrets["client_x509_cert_url"]
 }
 credentials_json = json.dumps(credentials_dict)
-# credentials_dict = json.loads(credentials_content)
 
 def fetch_data_from_sheet(table_name: str):
     # サービスアカウントの認証情報を取得
@@ -34,7 +33,7 @@ def fetch_data_from_sheet(table_name: str):
 
     try:
         # 共有されたスプレッドシートのキー
-        spreadsheet_key = '1UONHigFbVAq1YcS9MUfW4xKF7ILIslCUjGkM-4iPXko'
+        spreadsheet_key = st.secrets["SPREAD_SHEET_KEY"]
 
         # 共有されたスプレッドシートを開く
         worksheet = gc.open_by_key(spreadsheet_key).worksheet(table_name)

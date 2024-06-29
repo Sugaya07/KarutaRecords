@@ -35,7 +35,7 @@ def connect_sps(user_name):
 
     try:
         # 共有されたスプレッドシートのキー
-        spreadsheet_key = '1UONHigFbVAq1YcS9MUfW4xKF7ILIslCUjGkM-4iPXko'
+        spreadsheet_key = st.secrets["SPREAD_SHEET_KEY"]
 
         # 共有されたスプレッドシートを開く
         worksheet = gc.open_by_key(spreadsheet_key).worksheet("players")
