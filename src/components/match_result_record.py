@@ -18,13 +18,13 @@ def show_karuta_records():
     # ユーザーインターフェース
     st.title("カルタ試合記録データベース")
 
-    st.subheader("データ追加")
+    st.subheader("対戦結果記録")
 
-    round_num = st.selectbox("試合数", list(range(1, 8)))
+    round_num = st.number_input("試合数", min_value=1)
     player1_name = st.selectbox("対戦者1", list(player_options.keys()))
     player2_name = st.selectbox("対戦者2", [name for name in player_options.keys() if name != player1_name])
-    result_name = st.selectbox("試合結果(勝者)", list(player_options.keys()))
-    difference = st.selectbox("枚数差", list(range(1, 26)))
+    result_name = st.selectbox("試合結果(勝者)", [player1_name, player2_name])
+    difference = st.number_input("枚数差",min_value=1)
 
     if st.button('Add data'):
         connect_sps(player1_name, player2_name, result_name, difference, round_num)

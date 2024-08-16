@@ -1,6 +1,7 @@
 import gspread
 import json
 import streamlit as st
+import datetime
 from oauth2client.service_account import ServiceAccountCredentials
 
 # 認証スコープ
@@ -26,7 +27,6 @@ credentials_json = json.dumps(credentials_dict)
 def connect_sps(player1_id, player2_id, result, difference, round_num):
     # サービスアカウントの認証情報を取得
     credentials = ServiceAccountCredentials.from_json_keyfile_dict(json.loads(credentials_json), scope)
-    # credentials = ServiceAccountCredentials.from_json_keyfile_name(credentials_content, scope)
 
     # Google Sheetsに接続
     gc = gspread.authorize(credentials)
@@ -51,7 +51,10 @@ def connect_sps(player1_id, player2_id, result, difference, round_num):
         new_id = last_id + 1
 
         # 新しいデータの書き込み
-        new_data = [[new_id, player1_id, player2_id, result, difference]]
+        today = datetime.date.today()
+        formatted_date = today.strftime("%Y-%m-%d")
+
+        new_data = [[new_id, formatted_date, player1_id, player2_id, result, difference]]
         worksheet.append_rows(new_data)
 
         # 共有されたスプレッドシートを開く

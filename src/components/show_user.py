@@ -4,5 +4,5 @@ from components.utils.connect_sps import fetch_data_from_sheet
 
 def user_show_data():
     data = fetch_data_from_sheet("players")
-    df = pd.DataFrame(data, columns=['ID', '名前'])
+    df = pd.DataFrame(data, columns=['ID', '名前']).drop(columns=['ID'])
     st.dataframe(df)
