@@ -15,5 +15,5 @@ elif choice == "ユーザー管理ページ":
     user_management()
     user_show_data()
 else:
-    karuta_show_result_by_player()
     karuta_show_result_by_round()
+    karuta_show_result_by_player()
