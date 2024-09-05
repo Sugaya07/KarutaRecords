@@ -41,8 +41,14 @@ def karuta_show_result_by_round():
     matches_df = pd.DataFrame(matches_data, columns=['match_id', '日付', '対戦者1', '対戦者2', '試合結果(勝者)', '枚数差'])
     rounds_df = pd.DataFrame(rounds_data, columns=['round_id', 'match_id', 'round_num'])
 
-    selected_rounds = st.selectbox("何回戦の記録を見たいですか", list(range(1,8)))
+    date_list = matches_df['日付'].unique()
+    sorted_dates = sorted(date_list)
+    
+    selected_date = st.selectbox("何日の記録を見たいですか", sorted_dates)
+    selected_round = st.selectbox("何回戦の記録を見たいですか", list(range(1,8)))
+
     merged_df = pd.merge(matches_df, rounds_df, on='match_id')
-    filtered_df = merged_df[merged_df['round_num'] == str(selected_rounds)]
-    filtered_df = filtered_df.drop(columns=['match_id', 'round_id', 'round_num'])
+    filtered_df = merged_df[(merged_df['日付'] == selected_date)
+                             & (merged_df['round_num'] == str (selected_round))]
+    filtered_df = filtered_df.drop(columns=['match_id', 'round_id', 'round_num', '日付'])
     st.dataframe(filtered_df)
