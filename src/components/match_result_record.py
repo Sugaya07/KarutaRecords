@@ -16,7 +16,7 @@ def show_karuta_records():
     player_options = {row['name']: row['player_id'] for _, row in player_df.iterrows()}
     
     # ユーザーインターフェース
-    st.title("カルタ試合記録データベース")
+    st.title("合宿試合記録")
 
     st.subheader("対戦結果記録")
 
